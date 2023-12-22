@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This script stops 4-to_infinity_and_beyond process.
-pid_of_process=470
+pid_of_process=496
 kill "$pid_of_process"
