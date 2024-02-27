@@ -1,49 +1,40 @@
-# nginx_setup.pp
+#!/usr/bin/env bash
+# Configure server using puppet
 
-# Install Nginx package
-package { 'nginx':
-  ensure => installed,
+# defines a Puppet class called nginx_server that 
+#  encapsulates the configuration for the Nginx server.
+class nginx_server {
+  package { 'nginx':
+    ensure => installed,
+  }
+
+#  manages the Nginx service.
+  service { 'nginx':
+    ensure => running,
+    enable => true,
+    require => Package['nginx'],
+  }
+# manages the Nginx configuration file located at /etc/nginx/sites-available/default.
+  file { '/etc/nginx/sites-available/default':
+    ensure  => present,
+    content => "
+      server {
+        listen      80 default_server;
+        listen      [::]:80 default_server;
+        root        /var/www/html;
+        index       index.html index.htm;
+
+        location / {
+          return 200 'Hello World!';
+        }
+
+        location /redirect_me {
+          return 301 http://cuberule.com/;
+        }
+      }
+    ",
+    notify => Service['nginx'],
+  }
 }
-
-# Ensure Nginx service is running and enabled
-service { 'nginx':
-  ensure  => 'running',
-  enable  => true,
-  require => Package['nginx'],
-}
-
-# Configure Nginx server
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => template('nginx/default.erb'),
-  notify  => Service['nginx'],
-}
-
-# Create a custom 404 page
-file { '/var/www/html/custom_404.html':
-  ensure  => file,
-  content => 'Ceci n\'est pas une page',
-}
-
-# Enable custom configuration for redirection
-file { '/etc/nginx/sites-available/redirect_me':
-  ensure  => link,
-  target  => '/etc/nginx/sites-available/default',
-  require => File['/etc/nginx/sites-available/default'],
-  notify  => Service['nginx'],
-}
-
-# Notify Nginx to reload configuration
-exec { 'reload_nginx':
-  command     => 'service nginx reload',
-  refreshonly => true,
-  subscribe   => [File['/etc/nginx/sites-available/default'], File['/var/www/html/custom_404.html']],
-}
-
-# Ensure Nginx is listening on port 80
-firewall { '80':
-  proto  => 'tcp',
-  action => 'accept',
-}
-
-
+#  includes the nginx_server class, ensuring that it gets applied.
+include nginx_server
