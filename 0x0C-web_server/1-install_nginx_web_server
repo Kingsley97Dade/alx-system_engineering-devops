@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Update package list and install nginx with the -y flag to automatically answer yes to prompts
+apt-get update
+apt-get install -y nginx
+
+# Create a default HTML file containing "Hello World!"
+echo "Hello World!" > /var/www/html/index.html
+
+# Configure nginx to listen on port 80
+sed -i 's/80 default_server;/80;/' /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+service nginx restart
