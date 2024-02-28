@@ -1,5 +1,6 @@
-# Executes a command
-exec { 'pkill killmenow':
-	path	=> '/usr/bin:/usr/sbin:/bin',
+# Executes a bash command
+exec { 'kill':
+	command => 'pkill -f killmenow',
+	path 	=> ['/usr/bin', '/usr/sbin']
 }
 
