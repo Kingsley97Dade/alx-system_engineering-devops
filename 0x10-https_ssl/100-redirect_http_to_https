@@ -44,8 +44,9 @@ frontend besthor_front_end
 backend besthor_back_end
     balance roundrobin
     
-    server 176572-web-01 54.165.168.252:80 check
-    server 176572-web-02 54.236.45.234:80  check
+    server 491411-web-01 34.229.70.201:80 check
+    server 491411-web-02 54.204.71.189:80 check
+    server 491411-lb-01 54.164.46.126:80  check
 
 backend letsencrypt-backend
     server letsencrypt 127.0.0.1:54321
