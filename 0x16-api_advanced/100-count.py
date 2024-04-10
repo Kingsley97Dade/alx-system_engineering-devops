@@ -6,6 +6,7 @@ This module provides a recursive function to query the Reddit API, parse the tit
 
 import requests
 
+
 def count_words(subreddit, word_list, counts={}):
     """
     Recursively query the Reddit API, parse the titles of all hot articles, and print a sorted count of given keywords.
@@ -17,7 +18,7 @@ def count_words(subreddit, word_list, counts={}):
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     params = {'limit': 100, 'after': None}
-    headers = {'User-Agent': 'Mozilla/5.0'}  # Custom User-Agent to avoid Too Many Requests error
+    headers = {'User-Agent': 'test45'}  # Custom User-Agent to avoid Too Many Requests error
     response = requests.get(url, params=params, headers=headers)
 
     if response.status_code == 200:

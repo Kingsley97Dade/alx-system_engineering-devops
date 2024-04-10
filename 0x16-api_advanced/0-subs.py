@@ -5,6 +5,8 @@ This module provides a function to query the Reddit API and return the number of
 """
 
 import requests
+import sys
+
 
 def number_of_subscribers(subreddit):
     """
@@ -17,7 +19,7 @@ def number_of_subscribers(subreddit):
         int: The number of subscribers for the subreddit. Returns 0 if the subreddit is invalid.
     """
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {'User-Agent': 'Mozilla/5.0'}  # Custom User-Agent to avoid Too Many Requests error
+    headers = {'User-Agent': 'test'}  # Custom User-Agent to avoid Too Many Requests error
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
@@ -28,9 +30,4 @@ def number_of_subscribers(subreddit):
             return 0  # Invalid subreddit or data structure
     else:
         return 0  # Invalid subreddit or server error
-
-if __name__ == "__main__":
-    subreddit_name = 'learnprogramming'
-    subscribers = number_of_subscribers(subreddit_name)
-    print(f"The subreddit r/{subreddit_name} has {subscribers} subscribers.")
 

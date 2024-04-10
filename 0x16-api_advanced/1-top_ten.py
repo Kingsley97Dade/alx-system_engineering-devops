@@ -5,6 +5,8 @@ This module provides a function to query the Reddit API and print the titles of 
 """
 
 import requests
+import sys
+
 
 def top_ten(subreddit):
     """
@@ -14,7 +16,7 @@ def top_ten(subreddit):
         subreddit (str): The name of the subreddit.
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
-    headers = {'User-Agent': 'Mozilla/5.0'}  # Custom User-Agent to avoid Too Many Requests error
+    headers = {'User-Agent': 'test23'}  # Custom User-Agent to avoid Too Many Requests error
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:

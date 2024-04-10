@@ -5,6 +5,8 @@ This module provides a recursive function to query the Reddit API and return a l
 """
 
 import requests
+import sys
+
 
 def recurse(subreddit, hot_list=[]):
     """
@@ -19,7 +21,7 @@ def recurse(subreddit, hot_list=[]):
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     params = {'limit': 100, 'after': None}
-    headers = {'User-Agent': 'Mozilla/5.0'}  # Custom User-Agent to avoid Too Many Requests error
+    headers = {'User-Agent': 'test45'}  # Custom User-Agent to avoid Too Many Requests error
     response = requests.get(url, params=params, headers=headers)
 
     if response.status_code == 200:
